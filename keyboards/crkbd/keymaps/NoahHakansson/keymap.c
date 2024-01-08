@@ -19,12 +19,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include QMK_KEYBOARD_H
 
 // swedish åäö
-#define U_SW_AO_LOWER UM(0x00E5) // å
-#define U_SW_AO_UPPER UM(0x00C5) // Å
-#define U_SW_AA_LOWER UM(0x00E4) // ä
-#define U_SW_AA_UPPER UM(0x00C4) // Ä
-#define U_SW_OO_LOWER UM(0x00F6) // ö
-#define U_SW_OO_UPPER UM(0x00D6) // Ö
+// #define U_SW_AO_LOWER UM(0x00E5) // å
+// #define U_SW_AO_UPPER UM(0x00C5) // Å
+// #define U_SW_AA_LOWER UM(0x00E4) // ä
+// #define U_SW_AA_UPPER UM(0x00C4) // Ä
+// #define U_SW_OO_LOWER UM(0x00F6) // ö
+// #define U_SW_OO_UPPER UM(0x00D6) // Ö
 
 // Left-hand home row mods
 #define HOME_S LGUI_T(KC_S)
@@ -48,6 +48,52 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define _NAV 4
 #define _SE_LOWER 5
 #define _SE_UPPER 6
+
+enum custom_keycodes {
+    SW_AO_LOWER = SAFE_RANGE,
+    SW_AO_UPPER,
+    SW_AA_LOWER,
+    SW_AA_UPPER,
+    SW_OO_LOWER,
+    SW_OO_UPPER,
+};
+
+// send codes on keypress
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case SW_AO_LOWER:
+            if (record->event.pressed) {
+                send_unicode_string("å");
+            }
+            break;
+        case SW_AO_UPPER:
+            if (record->event.pressed) {
+                send_unicode_string("Å");
+            }
+            break;
+        case SW_AA_LOWER:
+            if (record->event.pressed) {
+                send_unicode_string("ä");
+            }
+            break;
+        case SW_AA_UPPER:
+            if (record->event.pressed) {
+                send_unicode_string("Ä");
+            }
+            break;
+        case SW_OO_LOWER:
+            if (record->event.pressed) {
+                send_unicode_string("ö");
+            }
+            break;
+        case SW_OO_UPPER:
+            if (record->event.pressed) {
+                send_unicode_string("Ö");
+            }
+            break;
+    }
+    return true;
+};
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -108,9 +154,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 	[_SE_LOWER] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,  U_SW_AO_LOWER,
+      KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,  SW_AO_LOWER,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      TO(0),   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                        KC_NO,   KC_NO,   KC_NO,   KC_NO,  U_SW_OO_LOWER, U_SW_AA_LOWER,
+      TO(0),   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                        KC_NO,   KC_NO,   KC_NO,   KC_NO,  SW_OO_LOWER, SW_AA_LOWER,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -119,9 +165,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 	[_SE_UPPER] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,  U_SW_AO_UPPER,
+      KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,  SW_AO_UPPER,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      TO(0),   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                        KC_NO,   KC_NO,   KC_NO,   KC_NO,  U_SW_OO_UPPER, U_SW_AA_UPPER,
+      TO(0),   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                        KC_NO,   KC_NO,   KC_NO,   KC_NO,  SW_OO_UPPER, SW_AA_UPPER,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
