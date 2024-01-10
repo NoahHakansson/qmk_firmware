@@ -94,7 +94,7 @@ bool    process_record_user(uint16_t keycode, keyrecord_t *record) {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[_BASE] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      KC_QUOT,  KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                        KC_NO,  KC_Y,    KC_U,     KC_I,   KC_O,    KC_P,
+      KC_QUOT,  KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                        KC_GRAVE, KC_Y,    KC_U,     KC_I,   KC_O,    KC_P,
   //|--------+--------+--------+--------+--------+------------|                |--------+--------+--------+--------+--------+--------|
       QK_GESC,  KC_A,   HOME_S,  HOME_D,  HOME_F,  LT(4,KC_G),                  KC_BSPC,  HOME_H,  HOME_J,  HOME_K,  KC_L,   KC_SCLN,
   //|--------+--------+--------+--------+--------+------------|                |--------+--------+--------+--------+--------+--------|
