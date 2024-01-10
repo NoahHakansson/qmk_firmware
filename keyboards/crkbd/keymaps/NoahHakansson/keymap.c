@@ -46,49 +46,44 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define _NUMBERS 2
 #define _RGB 3
 #define _NAV 4
-#define _SE_LOWER 5
-#define _SE_UPPER 6
+#define _SE 5
 
 enum custom_keycodes {
-    SW_AO_LOWER = SAFE_RANGE,
-    SW_AO_UPPER,
-    SW_AA_LOWER,
-    SW_AA_UPPER,
-    SW_OO_LOWER,
-    SW_OO_UPPER,
+    SW_AO = SAFE_RANGE,
+    SW_AA,
+    SW_OO,
 };
 
 // send codes on keypress
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+uint8_t mod_state;
+bool    process_record_user(uint16_t keycode, keyrecord_t *record) {
+    mod_state = get_mods();
     switch (keycode) {
-        case SW_AO_LOWER:
+        case SW_AO:
             if (record->event.pressed) {
-                send_unicode_string("å");
+                if (mod_state & MOD_MASK_SHIFT) {
+                    send_unicode_string("Å");
+                } else {
+                    send_unicode_string("å");
+                }
             }
             break;
-        case SW_AO_UPPER:
+        case SW_AA:
             if (record->event.pressed) {
-                send_unicode_string("Å");
+                if (mod_state & MOD_MASK_SHIFT) {
+                    send_unicode_string("Ä");
+                } else {
+                    send_unicode_string("ä");
+                }
             }
             break;
-        case SW_AA_LOWER:
+        case SW_OO:
             if (record->event.pressed) {
-                send_unicode_string("ä");
-            }
-            break;
-        case SW_AA_UPPER:
-            if (record->event.pressed) {
-                send_unicode_string("Ä");
-            }
-            break;
-        case SW_OO_LOWER:
-            if (record->event.pressed) {
-                send_unicode_string("ö");
-            }
-            break;
-        case SW_OO_UPPER:
-            if (record->event.pressed) {
-                send_unicode_string("Ö");
+                if (mod_state & MOD_MASK_SHIFT) {
+                    send_unicode_string("Ö");
+                } else {
+                    send_unicode_string("ö");
+                }
             }
             break;
     }
@@ -99,13 +94,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[_BASE] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      KC_GRV,   KC_Q,   KC_W,    KC_E,    KC_R,     KC_T,                       KC_QUOT,  KC_Y,    KC_U,     KC_I,   KC_O,    KC_P,
+      KC_QUOT,  KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                        KC_NO,  KC_Y,    KC_U,     KC_I,   KC_O,    KC_P,
   //|--------+--------+--------+--------+--------+------------|                |--------+--------+--------+--------+--------+--------|
-      KC_ESC,   KC_A,   HOME_S,  HOME_D,  HOME_F, LT(4,KC_G),                   KC_BSPC,  HOME_H,  HOME_J,  HOME_K,  KC_L,   KC_SCLN,
+      QK_GESC,  KC_A,   HOME_S,  HOME_D,  HOME_F,  LT(4,KC_G),                  KC_BSPC,  HOME_H,  HOME_J,  HOME_K,  KC_L,   KC_SCLN,
   //|--------+--------+--------+--------+--------+------------|                |--------+--------+--------+--------+--------+--------|
-     OSL(_SE_LOWER), HOME_Z,   KC_X,   KC_C,     KC_V,    KC_B,                       KC_DQUO,  HOME_N,   KC_M,   KC_COMM, KC_DOT, KC_SLSH,
-  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                              MEH(KC_NO), ALL_T(KC_SPC), OSL(_CODE),    KC_ENT, LSFT_T(KC_TAB), MO(_NUMBERS)),
+      OSL(_SE), HOME_Z, KC_X,    KC_C,    KC_V,    KC_B,                        KC_NO,  HOME_N,  KC_M,   KC_COMM,  KC_DOT, KC_SLSH,
+  //|--------+--------+--------+--------+--------+------------|                |--------+--------+--------+--------+--------+--------|
+                              MEH(KC_NO), HYPR_T(KC_SPC), OSL(_CODE),    KC_ENT, LSFT_T(KC_TAB), OSL(_NUMBERS)),
                                       //`--------------------------'  `--------------------------'
 
 	[_CODE] = LAYOUT_split_3x6_3(
@@ -125,14 +120,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       TO(0),    KC_1,    KC_2,    KC_3,    KC_4,   KC_5,                         KC_NO,   KC_6,    KC_7,    KC_8,    KC_9,    KC_0,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_NO,   KC_F12,  KC_NO,   KC_NO,   KC_NO,   KC_NO,                        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,
+      KC_NO,   KC_F12,  KC_NO,   KC_NO,   KC_NO,   KC_NO,                        KC_NO,   KC_NO,   KC_NO,  KC_COMM,  KC_DOT, KC_SLSH,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
                                                KC_NO, KC_NO, TO(_RGB),     TO(0), KC_NO, KC_NO),
                                       //`--------------------------'  `--------------------------'
 
 	[_RGB] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      RGB_TOG, KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                         KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,
+      RGB_TOG, KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       TO(0),  RGB_MOD, RGB_HUI, RGB_SAI, RGB_VAI, KC_NO,                         KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -152,26 +147,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                                KC_NO, KC_NO, KC_NO,    KC_NO, KC_NO, KC_NO),
                                       //`--------------------------'  `--------------------------'
 
-	[_SE_LOWER] = LAYOUT_split_3x6_3(
+	[_SE] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,  SW_AO_LOWER,
+      KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   SW_AO,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      TO(0),   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                        KC_NO,   KC_NO,   KC_NO,   KC_NO,  SW_OO_LOWER, SW_AA_LOWER,
+      TO(0),   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                        KC_NO,   KC_NO,   KC_NO,   KC_NO,   SW_OO,   SW_AA,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-                                              KC_NO, KC_NO, KC_NO,      TO(0), MO(_SE_UPPER), KC_NO),
-                                      //`--------------------------'  `--------------------------'
-
-	[_SE_UPPER] = LAYOUT_split_3x6_3(
-  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,  SW_AO_UPPER,
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      TO(0),   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                        KC_NO,   KC_NO,   KC_NO,   KC_NO,  SW_OO_UPPER, SW_AA_UPPER,
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-                                              KC_NO, KC_NO, KC_NO,      KC_NO, KC_NO, KC_NO)
+                                              KC_NO, KC_NO, KC_NO,      TO(0), KC_LSFT, KC_NO)
                                       //`--------------------------'  `--------------------------'
 };
 // clang-format on
