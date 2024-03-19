@@ -87,24 +87,24 @@ bool    process_record_user(uint16_t keycode, keyrecord_t *record) {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[_BASE] = LAYOUT_split_3x6_3(
   //,---------------------------------------------------------.                ,-----------------------------------------------------.
-      KC_QUOT,  KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                        KC_GRAVE, KC_Y,    KC_U,     KC_I,   KC_O,    KC_P,
+      KC_QUOT,  KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                        KC_DEL,   KC_Y,    KC_U,     KC_I,   KC_O,    KC_P,
   //|--------+--------+--------+--------+--------+------------|                |--------+--------+--------+--------+--------+--------|
       QK_GESC,  KC_A,   HOME_S,  HOME_D,  HOME_F,  LT(4,KC_G),                  KC_BSPC,  HOME_H,  HOME_J,  HOME_K,  KC_L,   KC_SCLN,
   //|--------+--------+--------+--------+--------+------------|                |--------+--------+--------+--------+--------+--------|
-      OSL(_SE), HOME_Z, KC_X,    KC_C,    KC_V,    KC_B,                        KC_NO,  HOME_N,  KC_M,   KC_COMM,  KC_DOT, KC_SLSH,
+      OSL(_SE), HOME_Z, KC_X,    KC_C,    KC_V,    KC_B,                        KC_SLSH,  HOME_N,  KC_M,   KC_COMM,  KC_DOT, KC_SLSH,
   //|--------+--------+--------+--------+--------+------------|                |--------+--------+--------+--------+--------+--------|
                               MEH(KC_NO), HYPR_T(KC_SPC), OSL(_CODE),    KC_ENT, LSFT_T(KC_TAB), OSL(_NUMBERS)),
                                       //`--------------------------'  `--------------------------'
 
 	[_CODE] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      KC_NO,  KC_EXLM, KC_AT,   KC_HASH, KC_DLR,   KC_NO,                       KC_CIRC, KC_PLUS, KC_LPRN, KC_RPRN,  KC_NO,   KC_NO,
+      KC_NO,  KC_EXLM, KC_AT,   KC_HASH, KC_DLR,   KC_NO,                       KC_CIRC, KC_PLUS, KC_LPRN, KC_RPRN, KC_QUES,  KC_GRAVE,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      TO(0),  KC_PERC, KC_ASTR, KC_AMPR, KC_PIPE,  KC_NO,                       KC_MINS, KC_COLN, KC_LCBR, KC_RCBR,  KC_EQL,  KC_NO,
+      KC_NO,  KC_PERC, KC_ASTR, KC_AMPR, KC_PIPE,  KC_NO,                       KC_MINS, KC_EQL, KC_LCBR, KC_RCBR,  KC_COLN,  KC_BSLS,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_NO,  KC_BSLS, KC_LT,   KC_GT,   KC_TILD,  KC_NO,                       KC_GRV,  KC_UNDS, KC_LBRC, KC_RBRC,  KC_NO,   KC_NO,
+      KC_NO,  KC_BSLS, KC_LT,   KC_GT,   KC_TILD,  KC_NO,                       KC_GRV,  KC_UNDS, KC_LBRC, KC_RBRC,  KC_SLSH,   KC_NO,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-                                            KC_NO, KC_NO, TO(_NUMBERS),      TO(0), KC_NO, KC_NO),
+                                            KC_NO, KC_NO, TO(_NUMBERS),      TO(0), KC_LSFT, KC_NO),
                                       //`--------------------------'  `--------------------------'
 
 	[_NUMBERS] = LAYOUT_split_3x6_3(
