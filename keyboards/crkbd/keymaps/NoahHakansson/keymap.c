@@ -40,7 +40,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define _NAV 4
 #define _SE 5
 
-// swedish åäö
+// send string keycodes for Swedish characters
+#define X_SE_AO X_LBRC // å
+#define X_SE_AA X_QUOT // ä
+#define X_SE_OO X_SCLN // ö
+
+#define SS_HYPR_SPC SS_LCTL(SS_LSFT(SS_LALT(SS_LGUI(SS_TAP(X_SPC)))))
+
 enum custom_keycodes {
     SW_AO = SAFE_RANGE,
     SW_AA,
@@ -48,35 +54,21 @@ enum custom_keycodes {
 };
 
 // send codes on keypress
-uint8_t mod_state;
-bool    process_record_user(uint16_t keycode, keyrecord_t *record) {
-    mod_state = get_mods();
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case SW_AO:
             if (record->event.pressed) {
-                if (mod_state & MOD_MASK_SHIFT) {
-                    send_unicode_string("Å");
-                } else {
-                    send_unicode_string("å");
-                }
+                SEND_STRING(SS_HYPR_SPC SS_TAP(X_SE_AO) SS_HYPR_SPC);
             }
             break;
         case SW_AA:
             if (record->event.pressed) {
-                if (mod_state & MOD_MASK_SHIFT) {
-                    send_unicode_string("Ä");
-                } else {
-                    send_unicode_string("ä");
-                }
+                SEND_STRING(SS_HYPR_SPC SS_TAP(X_SE_AA) SS_HYPR_SPC);
             }
             break;
         case SW_OO:
             if (record->event.pressed) {
-                if (mod_state & MOD_MASK_SHIFT) {
-                    send_unicode_string("Ö");
-                } else {
-                    send_unicode_string("ö");
-                }
+                SEND_STRING(SS_HYPR_SPC SS_TAP(X_SE_OO) SS_HYPR_SPC);
             }
             break;
     }
