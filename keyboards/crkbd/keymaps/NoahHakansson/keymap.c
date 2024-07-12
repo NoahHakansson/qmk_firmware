@@ -54,21 +54,37 @@ enum custom_keycodes {
 };
 
 // send codes on keypress
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+uint8_t mod_state;
+bool    process_record_user(uint16_t keycode, keyrecord_t *record) {
+    mod_state = get_mods();
     switch (keycode) {
         case SW_AO:
             if (record->event.pressed) {
-                SEND_STRING(SS_HYPR_SPC SS_TAP(X_SE_AO) SS_HYPR_SPC);
+                if (mod_state & MOD_MASK_SHIFT) {
+                    SEND_STRING(SS_HYPR_SPC SS_LSFT(SS_TAP(X_SE_AO)) SS_HYPR_SPC);
+
+                } else {
+                    SEND_STRING(SS_HYPR_SPC SS_TAP(X_SE_AO) SS_HYPR_SPC);
+                }
             }
             break;
         case SW_AA:
             if (record->event.pressed) {
-                SEND_STRING(SS_HYPR_SPC SS_TAP(X_SE_AA) SS_HYPR_SPC);
+                if (mod_state & MOD_MASK_SHIFT) {
+                    SEND_STRING(SS_HYPR_SPC SS_LSFT(SS_TAP(X_SE_AA)) SS_HYPR_SPC);
+
+                } else {
+                    SEND_STRING(SS_HYPR_SPC SS_TAP(X_SE_AA) SS_HYPR_SPC);
+                }
             }
             break;
         case SW_OO:
             if (record->event.pressed) {
-                SEND_STRING(SS_HYPR_SPC SS_TAP(X_SE_OO) SS_HYPR_SPC);
+                if (mod_state & MOD_MASK_SHIFT) {
+                    SEND_STRING(SS_HYPR_SPC SS_LSFT(SS_TAP(X_SE_OO)) SS_HYPR_SPC);
+                } else {
+                    SEND_STRING(SS_HYPR_SPC SS_TAP(X_SE_OO) SS_HYPR_SPC);
+                }
             }
             break;
     }
