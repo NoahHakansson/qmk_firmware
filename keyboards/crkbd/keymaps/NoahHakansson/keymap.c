@@ -101,7 +101,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+------------|                |--------+--------+--------+--------+--------+--------|
       OSL(_SE), HOME_Z, KC_X,    KC_C,    KC_V,    KC_B,                        KC_SLSH,  HOME_N,  KC_M,   KC_COMM,  KC_DOT, KC_SLSH,
   //|--------+--------+--------+--------+--------+------------|                |--------+--------+--------+--------+--------+--------|
-                              MEH(KC_NO), HYPR_T(KC_SPC), OSL(_CODE),    KC_ENT, LSFT_T(KC_TAB), OSL(_NUMBERS)),
+                              HYPR(KC_NO), MEH_T(KC_SPC), OSL(_CODE),    KC_ENT, LSFT_T(KC_TAB), OSL(_NUMBERS)),
                                       //`--------------------------'  `--------------------------'
 
 	[_CODE] = LAYOUT_split_3x6_3(
